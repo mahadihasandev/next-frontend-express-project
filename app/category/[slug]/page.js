@@ -1,21 +1,55 @@
+'use client'
 import CategoryGrid from "@/components/CategoryPageComponent";
 import Container from "@/components/Container";
+import { useParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
 
 
 
-const CategoryPage = async ({ params }) => {
+const CategoryPage = () => {
+  const [category, setCategory] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const params = useParams();
+  const slug = params.slug;
 
-  const response = await fetch("http://localhost:8000/api/v1/product/viewcategory", {
-    cache: "no-store"
-  });
+  useEffect(() => {
+    const fetchCategory = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/v1/product/viewcategory`);
+        const data = await response.json();
+        const foundCategory = data.find((item) => item.slug === slug);
+        setCategory(foundCategory);
+      } catch (error) {
+        console.error('Failed to fetch category:', error);
+        setCategory(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (slug) {
+      fetchCategory();
+    }
+  }, [slug]);
 
-  const data = await response.json();
+  if (loading) {
+    return (
+      <Container className="h-screen py-10">
+        <div className="flex justify-center items-center">
+          <p>Loading category...</p>
+        </div>
+      </Container>
+    );
+  }
 
- const { slug } = await params;
- 
- 
-  const category = data.find((item) => item.slug === slug);
-  
+  if (!category) {
+    return (
+      <Container className="h-screen py-10">
+        <div className="flex flex-col items-center justify-center shadow-lg py-5 px-52 rounded-lg">
+          <h1 className="text-2xl font-bold text-shop_dark_gray">Category not found</h1>
+        </div>
+      </Container>
+    );
+  }
 
   return (
     <Container className="h-screen py-10">
