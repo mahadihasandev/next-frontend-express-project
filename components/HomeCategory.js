@@ -10,7 +10,7 @@ const HomeCategory = () => {
     
     useEffect(() => {
         const fetchCategory = async () => {
-            const response = await fetch("http://localhost:8000/api/v1/product/viewcategory");
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/v1/product/viewcategory`);
             const data = await response.json();
             setCategory(data);
         };
