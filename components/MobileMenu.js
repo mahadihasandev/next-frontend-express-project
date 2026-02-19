@@ -9,7 +9,7 @@ const MobileMenu = () => {
   return (
     <>
     <button onClick={()=>(setIsSideBarOpen(!isSideBarOpen))}>
-        <IoReorderThree className='hover:text-darkColor hoverEffect md:hidden hover:cursor-pointer'/>
+        <IoReorderThree size={25} className=' text-white hover:text-white hoverEffect md:hidden hover:cursor-pointer'/>
     </button>
     <div className='md:hidden'>
       <SideMenu

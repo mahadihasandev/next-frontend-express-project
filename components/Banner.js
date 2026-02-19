@@ -42,7 +42,7 @@ const Banner = () => {
           {banner.map((item, index) => (
             <CarouselItem key={item._id || index}>
               <div className="rounded-lg h-full w-full overflow-hidden flex items-center justify-center">
-                <Link href={`/product/${item?.productSlug?.[0]}`}>
+                <Link href={`/product/${item?.productSlug}`}>
                   <Image
                     className="w-full h-full object-cover"
                     width={1300}

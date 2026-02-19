@@ -1,6 +1,9 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
+import { Toaster } from "react-hot-toast";
+import SessionWrapper from "@/components/SessionWrapper";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,10 +26,26 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header/>
-        <main>
-          {children}
-        </main>
+        <SessionWrapper>
+          <Header />
+          <Toaster
+            position="top-center"
+            reverseOrder={false}
+            gutter={8}
+            containerClassName=""
+            toastOptions={{
+              className: "",
+              duration: 3000,
+              removeDelay: 1000,
+              style: {
+                background: "#363636",
+                color: "#fff",
+              },
+            }}
+          />
+          <main className="bg-shop_light_bg">{children}</main>
+          <Footer/>
+        </SessionWrapper>
       </body>
     </html>
   );

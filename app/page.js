@@ -1,6 +1,10 @@
 import Banner from "@/components/Banner";
 import CategoryComponent from "@/components/CategoryComponent";
 import Container from "@/components/Container";
+import HomeCategory from "@/components/HomeCategory";
+import HomeProduct from "@/components/HomeProduct";
+import HomeTech from "@/components/HomeTech";
+;
 
 
 export default function Home() {
@@ -9,6 +13,9 @@ export default function Home() {
       <Container >
         <CategoryComponent/>
         <Banner/>
+        <HomeTech/>
+        <HomeCategory/>
+        <HomeProduct/>
       </Container>
     </div>
   );

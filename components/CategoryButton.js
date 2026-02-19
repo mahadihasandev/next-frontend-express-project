@@ -8,7 +8,7 @@ export default function CategoryButton({item}) {
   return (
     <div >
         <Link  href={`/category/${item._id}`}>
-         <Button className="px-4 py-2 font-bold hover:scale-110 border-2 text-shop_dark_green hover:text-white border-shop_dark_green hover:border-shop_orange hover:bg-shop_btn_dark_green bg-white font-poppins rounded-lg hoverEffect">
+         <Button className="px-4 py-2 font-extrabold hover:scale-110 border-2 text-shop_dark_orange hover:border-shop_orange hover:bg-white bg-white font-sans hoverEffect">
                 {item.name}
               </Button>
               </Link>
