@@ -1,7 +1,7 @@
 'use client'
 import { CircleMinus, CirclePlus } from 'lucide-react';
 import Image from 'next/image';
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSession, signIn} from "next-auth/react"
 import {
   Table,
@@ -15,7 +15,8 @@ import { Button } from './ui/button';
 import { useRouter } from 'next/navigation';
 
 
-const CartComponent = ({cartData}) => {
+const CartComponent = ({cartData: initialCartData}) => {
+  const [cartData, setCartData] = useState(initialCartData || [])
   const [refresh,setRefresh]=useState(false)
   const { data: session } = useSession()
  console.log(cartData)
@@ -27,30 +28,44 @@ const tax=totalPrice*10/100
 const finalPrice=totalPrice+tax+150
 
  const handleQuantity =(item,type)=>{
-   if(type=='increment'){
-      item.quantity+=1
-   }else if(type=='decrement'&&item.quantity>1){
-    item.quantity-=1
-   }
-  setRefresh(!refresh)
-      fetch(`${process.env.NEXT_PUBLIC_API}/api/v1/product/addtocart?type=${type}`,
-{
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    method: "POST",
-    body: JSON.stringify(
-    {
-      cartId:item.cartId._id,      
-      quantity:1,
-    }
-    )
-})
+   setCartData(prevCartData => {
+     const updatedCart = prevCartData.map(cartItem => {
+       if (cartItem._id === item._id) {
+         if (type === 'increment') {
+           return { ...cartItem, quantity: cartItem.quantity + 1 };
+         } else if (type === 'decrement') {
+           const newQuantity = cartItem.quantity - 1;
+           if (newQuantity <= 0) {
+             // Remove the item if quantity becomes 0 or less
+             return null;
+           }
+           return { ...cartItem, quantity: newQuantity };
+         }
+       }
+       return cartItem;
+     }).filter(item => item !== null); // Remove null items
 
-.then(function(res){  
- })
-.catch(function(res){ console.log(res) })  
+     return updatedCart;
+   });
+
+   // Call the API after updating state
+   fetch(`${process.env.NEXT_PUBLIC_API}/api/v1/product/addtocart?type=${type}`,
+   {
+       headers: {
+         'Accept': 'application/json',
+         'Content-Type': 'application/json'
+       },
+       method: "POST",
+       body: JSON.stringify(
+       {
+         cartId:item.cartId._id,      
+         quantity:1,
+       }
+       )
+   })
+   .then(function(res){  
+    })
+   .catch(function(res){ console.log(res) })  
  }
 
 

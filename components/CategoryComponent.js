@@ -41,7 +41,7 @@ export default function CategoryComponent() {
 
   return (
     <div>
-       <Container>
+       <div>
       <div className="bg-[#F8F9FA] py-5 shadow-lg rounded-md">
        <ul  className="flex justify-center items-center gap-2 md:gap-4 lg:gap-6 list-none flex-wrap">
 
@@ -64,7 +64,7 @@ export default function CategoryComponent() {
            </ul>
 
       </div>
-    </Container>
+    </div>
     </div>
   )
 }
