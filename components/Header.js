@@ -6,6 +6,7 @@ import MobileMenu from './MobileMenu'
 import AuthPage from './AuthPage'
 import { TiShoppingCart } from "react-icons/ti";
 import Link from 'next/link'
+import Logo from './Logo'
 
 
 const Header = () => {
@@ -36,10 +37,11 @@ const Header = () => {
         
   return (
     <header className='bg-black/90 py-5 sticky top-0 z-50 backdrop-blur-lg shadow rounded-b-lg'>
-        <Container className='flex justify-between items-center px-1'>
+        <Container className='flex justify-between items-center'>
             <div className='w-auto md:w-1/3 flex items-center justify-start gap-2.5 text-white md:gap-0'>
-              logo
-                <MobileMenu/>         
+              
+                <MobileMenu/>
+                <Logo/>        
             </div>
             <div className='w-auto md:w-1/3'>
              <HeaderMenu/>
