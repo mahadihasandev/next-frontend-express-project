@@ -48,8 +48,8 @@ const DiscountComponent = ({ discountData }) => {
   return (
     <Container>
         <div className='flex flex-col py-3 shadow-lg rounded-lg items-center justify-center'>
-                        <h1 className="text-2xl font-bold text-center">Top discount</h1>
-                        <p className="text-center text-shop_dark_orange">Discover our best deals and exclusive offers</p>
+            <h1 className="text-2xl font-bold text-center">Top discount</h1>
+            <p className="text-center text-shop_dark_orange">Discover our best deals and exclusive offers</p>
                     </div>
         <div>
       {
