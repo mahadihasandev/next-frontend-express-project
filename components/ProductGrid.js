@@ -69,6 +69,7 @@ const ProductGrid = () => {
     <div>
       {loading ? (
         <Loader />
+        
       ) : product?.length ? (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5 mt-10">
           {product?.slice(0, 15).map((item) => {

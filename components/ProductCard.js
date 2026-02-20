@@ -25,7 +25,7 @@ const ProductCard = ({
       )}
     >
       <div className="relative bg-shop_light_bg shadow-md rounded-md overflow-hidden">
-        <Link  href={`/product/${product?.slug}`}>
+        <Link  href={`/product/${product?._id}`}>
           {product?.image && (
             <Image
               height={700}
