@@ -1,11 +1,10 @@
 "use client";
 import { HiShoppingBag } from "react-icons/hi2";
-import toast from "react-hot-toast";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import PriceFormatter from "./PriceFormatter";
 import QuantityButton from "./QuantityButton";
-import { useEffect, useState } from "react";
+
 
 const AddToCartButton = ({
   product,
@@ -14,8 +13,9 @@ const AddToCartButton = ({
   handleCartUpdate,
   addToCartOptimistic,
 }) => {
-  let itemCount = cartItem?.quantity || 0;
-
+  let itemCount = cartItem?.quantity;
+  console.log(product);
+  
   let handleAddToCart = (item) => {
     addToCartOptimistic(item);
     fetch(`${process.env.NEXT_PUBLIC_API}/api/v1/product/addtocart`, {
@@ -55,7 +55,7 @@ const AddToCartButton = ({
             <span className="text-xs font-semibold">Subtotal</span>
             <PriceFormatter
               className=""
-              amount={product.price ? product.price * itemCount : 0}
+              amount={product.saleprice ? product.saleprice * itemCount : 0}
             />
           </div>
         </div>

@@ -17,6 +17,7 @@ const ProductCard = ({
 }) => {
  
 
+
   return (
     <div
       className={cn(
@@ -31,7 +32,7 @@ const ProductCard = ({
               height={700}
               width={700}
               alt="ProductImage"
-              className={`w-full h-64 object-cover overflow-hidden  transition-transform bg-shop_ duration-500 ease 
+              className={`w-full md:h-64 object-cover overflow-hidden transition-transform bg-shop_ duration-500 ease 
               ${product?.stock !== 0 ? "group-hover:scale-105" : "opacity-50"}`}
               src={product?.image[0]}
               loading="lazy"
@@ -46,7 +47,7 @@ const ProductCard = ({
           </p>
         )}
 
-        <Title className="text-base font-medium text-black line-clamp-1">
+        <Title className="md:text-base text-xs font-medium text-black line-clamp-1">
           {product?.name}
         </Title>
         <div className="flex items-center gap-2">
@@ -65,9 +66,9 @@ const ProductCard = ({
           <p className="text-xs tracking-wide text-shop_light_text">5 Review</p>
         </div>
         <div className="flex items-center gap-2.5">
-          <p className="font-medium text-sm font-sans">In Stock</p>
+          <p className="font-medium md:text-sm text-xs font-sans">In Stock</p>
           <p
-            className={`text-shop_dark_orange font-semibold text-sm ${product?.stock == 0 ? "text-red-600!" : "text-shop_dark_orange font-semibold text-sm"}`}
+            className={`text-shop_dark_orange font-semibold md:text-sm text-xs ${product?.stock == 0 ? "text-red-600!" : "text-shop_dark_orange font-semibold text-sm"}`}
           >
             {product?.stock > 0 ? product?.stock : "unavailable"}
           </p>
@@ -75,7 +76,7 @@ const ProductCard = ({
         <PriceView
           price={product?.regularprice}
           discount={product?.discount}
-          className="text-sm"
+          className="md:text-sm text-xs"
         />
         <AddToCartButton
           product={product}

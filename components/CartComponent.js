@@ -71,9 +71,11 @@ const finalPrice=totalPrice+tax+150
 
   return (
     <div className='h-screen pt-8 shadow-md'>
-    {session?!cartData.length>0?(<div className='flex flex-col justify-center items-center border p-5 w-96 shadow-lg shadow-shop_dark_orange rounded-lg'>
-      <h1 className='text-2xl font-sans text-shop_dark_orange pb-10 text-center'>Cart is empty</h1>
-    </div>):(<>
+    {session?!cartData.length>0?(<div className='flex justify-center items-center'><div className='flex flex-col justify-center items-center border p-10 w-96 shadow-lg shadow-shop_dark_orange rounded-lg'>
+      <h1 className='text-2xl font-sans text-red-600 pb-10 text-center'>Cart is empty</h1>
+      <p className='text-center pb-10 text-shop_dark_orange'>Click on the continue shopping button to add items to your cart.</p>
+      <Button onClick={()=>router.push("/shop")} className='bg-shop_dark_orange text hover:bg-shop_dark_orange/90 hoverEffect'>Continue Shopping</Button>
+    </div></div>):(<>
        <Table className='border shadow-lg'>
       <TableHeader>
         <TableRow>
@@ -93,7 +95,7 @@ const finalPrice=totalPrice+tax+150
           <TableCell>
              {item.cartId&& <Image src={item.cartId?.image[0]} height={50} width={50} alt='image'/>}
             </TableCell>
-          <TableCell>{item.cartId?.name}</TableCell>
+          <TableCell className='text-xs md:text-base'>{item.cartId?.name}</TableCell>
           <TableCell >
             <div className='flex gap-2 justify-center'>
              <CircleMinus onClick={()=>(handleQuantity(item,"decrement"))} className='text-orange-600 ' />
@@ -101,10 +103,10 @@ const finalPrice=totalPrice+tax+150
             <CirclePlus onClick={()=>(handleQuantity(item,"increment"))} className='text-orange-600 ' />
             </div>
             </TableCell>           
-          <TableCell>৳
+          <TableCell className='text-xs md:text-base'>৳
             {item.cartId?.saleprice?item.cartId?.saleprice:item.cartId?.regularprice}
           </TableCell>         
-          <TableCell>৳{item.cartId?.saleprice?item.cartId.saleprice*item.quantity:item.cartId?.regularprice*item.quantity}</TableCell>         
+          <TableCell className='text-xs md:text-base'>৳{item.cartId?.saleprice?item.cartId.saleprice*item.quantity:item.cartId?.regularprice*item.quantity}</TableCell>         
         </TableRow>     
           ))}
 

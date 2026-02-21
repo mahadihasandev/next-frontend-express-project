@@ -63,12 +63,12 @@ const ShopComponent = ({category,product}) => {
 
   return (
     <div>
-      <div className='w-full py-3 shadow-lg rounded-lg flex flex-col items-center justify-center'>
+      <div className='flex w-full py-3 shadow-lg rounded-lg  flex-col items-center justify-center'>
         <h1 className="text-2xl font-bold text-center py-1">Shop</h1>
         <p className="text-center text-lg text-shop_dark_orange">Pic your Favorite Product</p>
       </div>
-      <div className="py-5 flex flex-col gap-5 items-start md:flex-row">
-        <div className="flex flex-col md:min-w-40 border hoverEffect mt-10 rounded-md">
+      <div className=" py-5 flex flex-col gap-5 items-start md:flex-row">
+        <div className="hidden md:flex flex-col md:min-w-40 border hoverEffect mt-10 rounded-md">
               {category.map((category) => (
                 <Button
                   key={category?._id}
@@ -108,8 +108,8 @@ const ShopComponent = ({category,product}) => {
                     handleCategoryChange(category)
                   }
                   className={`bg-transparent border-0 p-0 text-darkColor 
-         hover:bg-shop_light_blue shadow-md rounded-md hover:text-white hover:scale-110 hover:rounded-md font-semibold 
-        hoverEffect border-b last:border-b-0 capitalize ${category?.slug === currentProduct?.slug && "bg-shop_light_blue text-white"}`}
+         hover:bg-shop_dark_orange shadow-md rounded-md hover:text-white px-6 hover:rounded-md font-semibold 
+        hoverEffect border-b last:border-b-0 capitalize ${category?.slug === currentProduct?.slug && "bg-shop_dark_orange text-white"}`}
                 >
                   <p className="w-full text-left px-2">{category?.name}</p>
                 </Button>
@@ -121,7 +121,7 @@ const ShopComponent = ({category,product}) => {
 
         <div>
       { !currentProduct ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 mt-10">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 md:mt-10">
           {product?.map((item) => {
             const cartItem = cartData?.find(
               (cart) => cart?.cartId?._id === item?._id,

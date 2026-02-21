@@ -8,7 +8,7 @@ const PriceFormatter = ({amount,className}) => {
         minimumFractionDigits:0,
     })
   return (
-    <span className={cn("text-sm font-bold text-darkColor",className)}>
+    <span className={cn("text-xs md:text-sm overflow-hidden font-bold text-darkColor",className)}>
         {formattedPrice}
     </span>
   )
