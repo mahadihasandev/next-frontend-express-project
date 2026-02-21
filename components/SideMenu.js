@@ -14,7 +14,7 @@ const SideMenu = ({isOpen,onClose}) => {
     <div 
     className={`fixed text-white/80 inset-y-0 h-screen left-0 z-50 w-full bg-black/50 backdrop-blur-md shadow-xl ${isOpen?'translate-x-0':'-translate-x-full'} hoverEffect`}>
       <div 
-      className=' min-w-56 max-w-72 bg-black/95 h-screen p-10 border-r-2 border-shop_dark_green flex flex-col gap-6'>
+      className=' min-w-56 max-w-72 bg-black/95 h-screen p-10 border-r-2 border-shop_dark_orange flex flex-col gap-6'>
         <div className='flex items-center justify-between gap-5'>
         <Logo className='text-white' spanDesign="group-hover:text-white"/>
         <button onClick={onClose} className='text-red-300 hover:text-red-600 hoverEffect'><X size={20} /></button>
@@ -24,7 +24,7 @@ const SideMenu = ({isOpen,onClose}) => {
             {
               headerData?.map((item)=>(
                 <Link key={item?.href} href={item?.href} 
-                className={`hover:text-green-300 hoverEffect ${pathname==item?.href&&'text-green-300'}`}
+                className={`hover:text-shop_dark_orange hoverEffect ${pathname==item?.href&&'text-shop_dark_orange'}`}
                 >
                   {item?.title}
                 </Link>

@@ -32,7 +32,7 @@ export default function CategoryComponent() {
             <div>
                 <Container>
                     <div className="bg-[#F8F9FA] py-5 shadow-lg rounded-md flex justify-center">
-                        <p>Loading categories...</p>
+                        <p className="text-shop_dark_orange text-xl font-sans font-bold">Loading categories...</p>
                     </div>
                 </Container>
             </div>
@@ -52,7 +52,7 @@ export default function CategoryComponent() {
              <ul  className="absolute hidden group-hover:block z-50">
              { item.subcategoryList.map(items=>(
               <Link href={`/subcategory/${items.slug}`} key={items._id} className="block">
-                      <li className='border border-shop_dark_orange shadow shadow-shop_dark_orange rounded-md font-semibold text-shop_dark_gray cursor-pointer font-poppins bg-gray-50 py-1 px-3 sm:px-10 text-xs sm:text-sm hover:scale-105 ease-in-out duration-200 transition-all'>{items.name}</li>
+                      <li className='border border-shop_dark_orange shadow shadow-shop_dark_orange rounded-md font-semibold text-shop_dark_gray cursor-pointer font-poppins bg-gray-50 py-1 px-4 sm:px-10 text-xs sm:text-sm hover:scale-105 ease-in-out duration-200 transition-all'>{items.name}</li>
                </Link>
                      ))}
 

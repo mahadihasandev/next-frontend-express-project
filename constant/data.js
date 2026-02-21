@@ -2,7 +2,7 @@ export const headerData=[
     {title:"Home" ,href:"/"},
     {title:"Shop" ,href:"/shop"},
     {title:"Discount" ,href:"/discount"},   
-    {title:"Hot Deal" ,href:"/deal"},
+    {title:"Contact" ,href:"/contact"},
     {title:"About" ,href:"/about"},
     
 ];
