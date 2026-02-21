@@ -92,7 +92,7 @@ const cartItem = cartData?.find((cart) => cart?.cartId?._id === product?._id )
                 height={700}
                 width={700}
                 alt="ProductImage"
-                className={`w-16 h-16 mb-5 object-cover overflow-hidden hoverEffect ${product?.stock !== 0 ? "group-hover:scale-105" : "opacity-50"}`}
+                className={`w-16 h-16 mb-5 object-cover overflow-hidden shadow-lg hoverEffect ${product?.stock !== 0 ? "group-hover:scale-105" : "opacity-50"}`}
                 src={image}
                 loading="lazy"
               />
