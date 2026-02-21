@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+
 import { RiNextjsLine } from "react-icons/ri";
 import { FaNodeJs } from "react-icons/fa";
 import { motion } from "motion/react";
@@ -8,7 +8,6 @@ import { SiShadcnui } from "react-icons/si";
 import { RiTailwindCssFill } from "react-icons/ri";
 import nextauth from "../assets/nextauth.svg"
 import Image from "next/image";
-import Link from "next/link";
 const HomeTech = () => {
   const techData=[
             {

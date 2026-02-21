@@ -33,7 +33,7 @@ const SubCategoryPage = () => {
 
   if (loading) {
     return (
-      <Container className="h-screen py-10">
+      <Container className="h-screen mpy-10">
         <div className="flex justify-center items-center">
           <p>Loading subcategory...</p>
         </div>
@@ -45,17 +45,17 @@ const SubCategoryPage = () => {
     return (
       <Container className="h-screen py-10">
         <div className="flex flex-col items-center justify-center shadow-lg py-5 px-52 rounded-lg">
-          <h1 className="text-2xl font-bold text-shop_dark_gray">Subcategory not found</h1>
+          <h1 className="md:text-2xl font-bold text-shop_dark_gray">Subcategory not found</h1>
         </div>
       </Container>
     );
   }
 
   return (
-    <Container className="h-screen py-10">
-      <div className="flex flex-col items-center justify-center shadow-lg py-5 px-52 rounded-lg">
-        <h1 className="text-2xl font-bold text-shop_dark_gray">{subcategory?.name}</h1>
-        <p className="text-sm text-shop_dark_gray">Get Your Desired Product from {subcategory?.name}!</p>
+    <Container className="h-screen py-2 md:py-10">
+      <div className="flex flex-col items-center justify-center shadow-lg py-5 md:px-52 rounded-lg">
+        <h1 className="md:text-2xl font-bold text-shop_dark_gray">{subcategory?.name}</h1>
+        <p className="text-sm text-shop_dark_orange">Get Your Desired Product from {subcategory?.name}!</p>
       </div>
       <SubCategoryGrid subcategory={subcategory}/>
     </Container>

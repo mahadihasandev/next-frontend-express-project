@@ -52,10 +52,10 @@ const CategoryPage = () => {
   }
 
   return (
-    <Container className="h-screen py-10">
-      <div className="flex flex-col items-center justify-center shadow-lg py-5 px-52 rounded-lg">
-        <h1 className="text-2xl font-bold text-shop_dark_gray">{category?.name}</h1>
-        <p className="text-sm text-shop_dark_gray">Get Your Desired Product from {category?.name}!</p>
+    <Container className="h-screen py-2 md:py-10">
+      <div className="flex flex-col items-center justify-center shadow-lg py-2 md:py-5 md:px-52 rounded-lg">
+        <h1 className="md:text-2xl font-bold text-shop_dark_gray">{category?.name}</h1>
+        <p className="text-sm text-shop_dark_orange">Get Your Desired Product from {category?.name}!</p>
       </div>
       <CategoryGrid category={category}/>
     </Container>

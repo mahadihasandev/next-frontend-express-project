@@ -63,7 +63,7 @@ console.log(subcategory);
       {loading ? (
         <Loader />
       ) : subcategory?.productList?.length ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5 mt-10">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5 mt-4 md:mt-10">
           {subcategory?.productList?.map((item) => {
             
             
