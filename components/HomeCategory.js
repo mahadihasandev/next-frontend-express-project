@@ -17,8 +17,8 @@ const HomeCategory = () => {
         fetchCategory();
     }, []);
   return (
-    <div className='flex flex-col shadow-md md:pb-5 rounded-lg items-center justify-center md:my-10'>
-        <div className='flex flex-col items-center justify-center shadow-lg py-5 md:px-96 px-5 rounded-lg my-3 md:my-10'> 
+    <div className='flex flex-col shadow-md md:pb-5 rounded-lg items-center justify-center md:my-5'>
+        <div className='flex flex-col items-center justify-center shadow-lg py-5 md:px-96 px-5 rounded-lg my-3 md:my-5'> 
             <h1 className='md:text-2xl font-bold text-shop_dark_gray'>Featured Category</h1>
             <p className='text-xs text-center px-2 md:text-sm text-shop_dark_orange'>Get Your Desired Product from Featured Category!</p>
         </div>

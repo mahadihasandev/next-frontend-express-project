@@ -35,7 +35,7 @@ const HomeTech = () => {
           ]
   return (
     <div>
-      <div className="mt-4 md:my-16 text-center">
+      <div className="mt-4 md:mt-9 text-center">
         <h3 className="text-base md:text-2xl font-bold text-shop_dark_gray mb-4 md:mb-8">
           Built With Modern Technology
         </h3>
