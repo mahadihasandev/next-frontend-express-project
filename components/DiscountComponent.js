@@ -46,52 +46,58 @@ const DiscountComponent = ({ discountData }) => {
   };
     
   return (
-    <Container>
-        <div className='flex flex-col py-3 shadow-lg rounded-lg items-center justify-center'>
-            <h1 className="text-2xl font-bold text-center">Top discount</h1>
-            <p className="text-center text-shop_dark_orange">Discover our best deals and exclusive offers</p>
-                    </div>
-        <div>
-      {
-       discountData?.discount?.length ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5 mt-10">
-          {discountData.discount.map((item) => {
-            const cartItem = cartData?.find(
-              (cart) => cart?.cartId?._id === item?._id,
-            );
-            return (
-              <AnimatePresence key={item._id}>
-                <motion.div
-                  layout
-                  initial={{ opacity: 0.2 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 1 }}
-                >
-                  <div>
-                    
-                    <div className='flex flex-col items-center justify-center'>
-                        <span className='bg-shop_dark_orange text-white text-xs font-bold px-1 rounded-sm my-4 text-center'>{item.discount} Tk OFF</span>
-                    </div>
+    <Container className="space-y-8 py-6">
+      <div className="bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-8 shadow-xs flex flex-col items-center justify-center text-center space-y-2">
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200/60 shadow-xs">
+          Exclusive Markdowns
+        </span>
+        <h1 className="text-3xl font-black text-slate-900 tracking-tight">
+          Limited-Time Special Discounts
+        </h1>
+        <p className="text-xs sm:text-sm text-slate-500 font-medium max-w-md">
+          Discover verified deals with instant promotional savings applied automatically at checkout.
+        </p>
+      </div>
+
+      <div>
+        {discountData?.discount?.length ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {discountData.discount.map((item) => {
+              const cartItem = cartData?.find(
+                (cart) => cart?.cartId?._id === item?._id
+              );
+              return (
+                <AnimatePresence key={item._id}>
+                  <motion.div
+                    layout
+                    initial={{ opacity: 0.2 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
                     <ProductCard
                       product={item}
                       cartItem={cartItem}
                       handleCartUpdate={handleCartUpdate}
                       addToCartOptimistic={addToCartOptimistic}
-                      className=""
                     />
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            );
-          })}
-        </div>
-      ) : (
-        <div className="flex flex-col justify-center items-center border p-5 w-96 shadow-lg shadow-shop_dark_orange rounded-lg">
-          <h1 className="text-2xl font-sans text-shop_dark_orange pb-10 text-center">No Discount Product Found</h1>
-        </div>
-      )}
-    </div>
+                  </motion.div>
+                </AnimatePresence>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="bg-white border border-slate-200/80 rounded-3xl p-12 text-center max-w-md mx-auto shadow-xs space-y-3">
+            <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto font-bold text-xl">
+              %
+            </div>
+            <h2 className="text-xl font-bold text-slate-900">No Discount Offers Active</h2>
+            <p className="text-xs text-slate-500">
+              All promotional items are currently sold out or restored to standard retail pricing.
+            </p>
+          </div>
+        )}
+      </div>
     </Container>
   )
 }

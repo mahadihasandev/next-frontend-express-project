@@ -1,42 +1,58 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
 import ProductCard from "./ProductCard";
 import Loader from "./Loader";
 import NoProduct from "./NoProduct";
 
-const ProductGrid = () => {
-  const [product, setProduct] = useState([]);
-  const [loading, setLoading] = useState(false);
+const ProductGrid = ({ initialProducts = [] }) => {
+  const [product, setProduct] = useState(
+    Array.isArray(initialProducts) && initialProducts.length > 0 ? initialProducts : []
+  );
+  const [loading, setLoading] = useState(!initialProducts || initialProducts.length === 0);
   const [cartData, setCartData] = useState([]);
 
   useEffect(() => {
-    async function ProductData() {
+    if (initialProducts && initialProducts.length > 0) {
+      setProduct(initialProducts);
+      setLoading(false);
+      return;
+    }
+
+    async function fetchProducts() {
       setLoading(true);
       try {
-        let data = await fetch(
-          `${process.env.NEXT_PUBLIC_API}/api/v1/product/viewproduct`,
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API || "http://localhost:8000"}/api/v1/product/viewproduct`
         );
-        const ProductData = await data.json();
-        setProduct(ProductData);
+        const data = await res.json();
+        setProduct(Array.isArray(data) ? data : []);
       } catch (error) {
-        console.error("Error fetching banner data:", error);
+        console.error("Error fetching product data:", error);
       } finally {
         setLoading(false);
       }
     }
-    ProductData();
-  }, []);
+    fetchProducts();
+  }, [initialProducts]);
 
   useEffect(() => {
     async function getCartData() {
-      const data = await fetch(
-        `${process.env.NEXT_PUBLIC_API}/api/v1/product/viewaddtocart`,
-      );
-      const posts = await data.json();
-      setCartData(posts);
+      try {
+        const data = await fetch(
+          `${process.env.NEXT_PUBLIC_API || "http://localhost:8000"}/api/v1/product/viewaddtocart`
+        );
+        const posts = await data.json();
+        setCartData(Array.isArray(posts) ? posts : []);
+      } catch (error) {
+        console.error("Error fetching cart data:", error);
+      }
     }
     getCartData();
+
+    // Listen to custom event for instant zero-polling updates
+    const handleCartSync = () => getCartData();
+    window.addEventListener("cart-updated", handleCartSync);
+    return () => window.removeEventListener("cart-updated", handleCartSync);
   }, []);
 
   const handleCartUpdate = (cartId, action) => {
@@ -50,51 +66,38 @@ const ProductGrid = () => {
       }
       return item;
     });
-    // Filter out items with quantity 0 or less
-    const filteredCartData = newCartData.filter((item) => item.quantity > 0);
-    setCartData(filteredCartData);
+    setCartData(newCartData.filter((item) => item.quantity > 0));
   };
 
-  const addToCartOptimistic = (product) => {
-    // Generate a temporary ID or use product ID to track it
+  const addToCartOptimistic = (prod) => {
     const newItem = {
-      _id: `temp-${product._id}`,
-      cartId: product,
+      _id: `temp-${prod._id}`,
+      cartId: prod,
       quantity: 1,
     };
     setCartData([...cartData, newItem]);
   };
 
   return (
-    <div>
+    <div className="w-full">
       {loading ? (
         <Loader />
-        
       ) : product?.length ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5 mt-10">
-          {product?.slice(0, 15).map((item) => {
+        /* Symmetrical 4-column desktop grid with hardware-accelerated rendering */
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+          {product.map((item) => {
             const cartItem = cartData?.find(
-              (cart) => cart?.cartId?._id === item?._id,
+              (cart) => cart?.cartId?._id === item?._id
             );
             return (
-              <AnimatePresence key={item._id}>
-                <motion.div
-                  layout
-                  initial={{ opacity: 0.2 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 1 }}
-                >
-                  <div>
-                    <ProductCard
-                      product={item}
-                      cartItem={cartItem}
-                      handleCartUpdate={handleCartUpdate}
-                      addToCartOptimistic={addToCartOptimistic}
-                    />
-                  </div>
-                </motion.div>
-              </AnimatePresence>
+              <div key={item._id} className="w-full flex justify-center">
+                <ProductCard
+                  product={item}
+                  cartItem={cartItem}
+                  handleCartUpdate={handleCartUpdate}
+                  addToCartOptimistic={addToCartOptimistic}
+                />
+              </div>
             );
           })}
         </div>

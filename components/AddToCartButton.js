@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils";
 import PriceFormatter from "./PriceFormatter";
 import QuantityButton from "./QuantityButton";
 
-
 const AddToCartButton = ({
   product,
   className,
@@ -13,48 +12,55 @@ const AddToCartButton = ({
   handleCartUpdate,
   addToCartOptimistic,
 }) => {
-  let itemCount = cartItem?.quantity;
-  console.log(product);
-  
-  let handleAddToCart = (item) => {
-    addToCartOptimistic(item);
-    fetch(`${process.env.NEXT_PUBLIC_API}/api/v1/product/addtocart`, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify({
-        cartId: item._id,
-        ownerId: "6933e3def0c48d04280e0b90",
-        quantity: 1,
-      }),
-    });
+  const itemCount = cartItem?.quantity;
 
-    // .then(function(res){ console.log(res,"data") })
-    // .catch(function(res){ console.log(res) })
+  const handleAddToCart = async (item) => {
+    if (addToCartOptimistic) addToCartOptimistic(item);
+    try {
+      await fetch(
+        `${process.env.NEXT_PUBLIC_API || "http://localhost:8000"}/api/v1/product/addtocart`,
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify({
+            cartId: item._id,
+            ownerId: "6933e3def0c48d04280e0b90",
+            quantity: 1,
+          }),
+        }
+      );
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(new Event("cart-updated"));
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 
-  const outOfStock = product?.stock == 0;
+  const outOfStock = Number(product?.stock || 0) === 0;
+
   return (
-    <>
+    <div className="w-full">
       {itemCount ? (
-        <div className="text-sm w-full">
+        <div className="text-xs w-full space-y-1">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-darkColor/80">
-              Quantity
+            <span className="text-[11px] font-bold text-slate-500 uppercase">
+              Qty
             </span>
             <QuantityButton
               cartItem={cartItem}
               itemCount={itemCount}
               handleCartUpdate={handleCartUpdate}
-              className=""
+              className="scale-90"
             />
           </div>
-          <div className="flex items-center justify-between border-t border-shop_dark_orange pt-1">
-            <span className="text-xs font-semibold">Subtotal</span>
+          <div className="flex items-center justify-between border-t border-slate-100 pt-1">
+            <span className="text-[11px] font-bold text-slate-500 uppercase">Total</span>
             <PriceFormatter
-              className=""
+              className="font-bold text-emerald-700"
               amount={product.saleprice ? product.saleprice * itemCount : 0}
             />
           </div>
@@ -64,15 +70,18 @@ const AddToCartButton = ({
           onClick={() => handleAddToCart(product)}
           disabled={outOfStock}
           className={cn(
-            "w-full bg-white text-shop_dark_orange border border-shop_dark_orange font-semibold tracking-wide hover:text-white hover:bg-shop_dark_orange hover:border-shop_dark_orange hoverEffect",
-            className,
+            "w-full h-11 rounded-2xl font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2",
+            outOfStock
+              ? "bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed"
+              : "bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white shadow-xs cursor-pointer",
+            className
           )}
         >
-          <HiShoppingBag />
-          {outOfStock ? "Out of Stock" : "Add to Cart"}
+          <HiShoppingBag className="w-4 h-4" />
+          <span>{outOfStock ? "Out of Stock" : "Add to Cart"}</span>
         </Button>
       )}
-    </>
+    </div>
   );
 };
 

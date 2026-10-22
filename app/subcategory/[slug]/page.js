@@ -43,19 +43,25 @@ const SubCategoryPage = () => {
 
   if (!subcategory) {
     return (
-      <Container className="h-screen py-10">
-        <div className="flex flex-col items-center justify-center shadow-lg py-5 px-52 rounded-lg">
-          <h1 className="md:text-2xl font-bold text-shop_dark_gray">Subcategory not found</h1>
+      <Container className="py-16">
+        <div className="flex flex-col items-center justify-center bg-white border border-slate-200/80 p-10 rounded-3xl shadow-xs max-w-md mx-auto text-center space-y-3">
+          <h1 className="text-2xl font-black text-slate-900">Subcategory Not Found</h1>
+          <p className="text-xs text-slate-500">The requested subcategory could not be located in our catalog.</p>
         </div>
       </Container>
     );
   }
 
   return (
-    <Container className="h-screen py-2 md:py-10">
-      <div className="flex flex-col items-center justify-center shadow-lg py-5 md:px-52 rounded-lg">
-        <h1 className="md:text-2xl font-bold text-shop_dark_gray">{subcategory?.name}</h1>
-        <p className="text-sm text-shop_dark_orange">Get Your Desired Product from {subcategory?.name}!</p>
+    <Container className="py-6 space-y-6">
+      <div className="bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-8 shadow-xs flex flex-col items-center justify-center text-center space-y-2">
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200/60 shadow-xs">
+          Specialized Subcategory
+        </span>
+        <h1 className="text-3xl font-black text-slate-900 tracking-tight">{subcategory?.name}</h1>
+        <p className="text-xs sm:text-sm text-slate-500 font-medium max-w-md">
+          Browse verified models and variations available in {subcategory?.name}.
+        </p>
       </div>
       <SubCategoryGrid subcategory={subcategory}/>
     </Container>

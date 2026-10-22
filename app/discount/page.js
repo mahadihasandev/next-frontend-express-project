@@ -1,16 +1,25 @@
 import DiscountComponent from '@/components/DiscountComponent';
-import React from 'react'
+import React from 'react';
+
+export const dynamic = 'force-dynamic';
 
 const page = async () => {
-     const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/v1/product/topdiscount`);
-        const data = await response.json();
-        
-        
+  let data = { discount: [] };
+  try {
+    const apiBase = process.env.NEXT_PUBLIC_API || 'http://localhost:8000';
+    const response = await fetch(`${apiBase}/api/v1/product/topdiscount`, { cache: 'no-store' });
+    if (response.ok) {
+      data = await response.json();
+    }
+  } catch (error) {
+    console.warn('Failed to fetch topdiscount on server:', error.message);
+  }
+
   return (
     <div>
-        <DiscountComponent discountData={data}/>
+      <DiscountComponent discountData={data} />
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

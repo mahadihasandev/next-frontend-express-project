@@ -1,23 +1,29 @@
-"use client"
-import Link from "next/link"
-import { headerData } from "@/constant/data"
-import { usePathname } from "next/navigation"
-
+"use client";
+import Link from "next/link";
+import { headerData } from "@/constant/data";
+import { usePathname } from "next/navigation";
 
 export default function HeaderMenu() {
-     const pathname=usePathname()
-  
-  return (
-    <div className='hidden md:inline-flex items-center justify-center capitalize z-10 font-bold text-white font-sans gap-8'>
-        {headerData.map((item)=>(
-            <Link key={item.title} href={item?.href}
-            className={`relative group z-10 hoverEffect hover:text-shop_dark_orange isolate ${pathname==item?.href&&'text-shop_dark_orange'}`}
-            >
-            {item.title}
-            <span className={`absolute inset-0 -z-10 bg-shop_dark_orange -left-[25%] top-6 h-1.5 w-[150%] rounded scale-0 group-hover:scale-100 hoverEffect origin-center ${pathname==item?.href&&"scale-100"}`}/>
-            </Link>
-        ))}
-    </div>
-  )
-}
+  const pathname = usePathname();
 
+  return (
+    <nav className="hidden md:inline-flex items-center justify-center gap-2 lg:gap-3">
+      {headerData.map((item) => {
+        const isActive = pathname === item.href;
+        return (
+          <Link
+            key={item.title}
+            href={item.href}
+            className={`px-4 py-2 rounded-xl text-sm md:text-[15px] font-bold transition-all duration-200 capitalize tracking-tight ${
+              isActive
+                ? "bg-emerald-50 text-emerald-700 font-extrabold border border-emerald-200/80 shadow-xs"
+                : "text-slate-700 hover:text-slate-950 hover:bg-slate-100"
+            }`}
+          >
+            {item.title}
+          </Link>
+        );
+      })}
+    </nav>
+  );
+}

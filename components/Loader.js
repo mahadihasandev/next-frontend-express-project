@@ -1,18 +1,15 @@
-import React from 'react'
-import { TbLoader3 } from 'react-icons/tb'
+import React from 'react';
+import { Loader2 } from 'lucide-react';
 
 const Loader = () => {
   return (
-    <div>
-    <div className='flex flex-col items-center justify-center py-10 min-h-80 gap-4 
-      bg-gray-100 w-full mt-10'>
-        <div className='space-x-2 flex items-center text-blue-600'>
-          <TbLoader3 className='w-10 h-9 animate-spin text-shop_dark_orange'/>
-          <span>Product is Loading...</span>
-        </div>
-      </div>
+    <div className="flex flex-col items-center justify-center py-16 min-h-64 gap-3 bg-white border border-slate-200/80 rounded-3xl w-full my-6 shadow-xs">
+      <Loader2 className="w-8 h-8 animate-spin text-emerald-600" />
+      <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+        Loading Products...
+      </span>
     </div>
-  )
-}
+  );
+};
 
-export default Loader
+export default Loader;

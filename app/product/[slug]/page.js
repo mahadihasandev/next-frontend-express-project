@@ -1,19 +1,29 @@
 import SingleProductPage from '@/components/SingleProductPage';
-import React from 'react'
+import React from 'react';
 
-const ProductPage = async ({params}) => {
-    const{ slug} = await params
-    console.log(slug);
-     let data = await fetch(`${process.env.NEXT_PUBLIC_API}/api/v1/product/viewsingleproduct/${slug}`)
-  let posts = await data.json()
-  console.log(posts);
-  
-    
+export const dynamic = 'force-dynamic';
+
+const ProductPage = async ({ params }) => {
+  const { slug } = await params;
+  let product = null;
+  const apiBase = process.env.NEXT_PUBLIC_API || 'http://localhost:8000';
+
+  try {
+    const data = await fetch(`${apiBase}/api/v1/product/viewsingleproduct/${slug}`, {
+      cache: 'no-store',
+    });
+    if (data.ok) {
+      product = await data.json();
+    }
+  } catch (error) {
+    console.warn(`Failed to fetch product for slug ${slug}:`, error.message);
+  }
+
   return (
     <div>
-      <SingleProductPage product={posts}/>
+      <SingleProductPage product={product} />
     </div>
-  )
-}
+  );
+};
 
-export default ProductPage
+export default ProductPage;

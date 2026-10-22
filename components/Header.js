@@ -1,62 +1,83 @@
-'use client'
-import React, { useEffect, useRef } from 'react'
-import Container from './Container'
-import HeaderMenu from './HeaderMenu'
-import MobileMenu from './MobileMenu'
-import AuthPage from './AuthPage'
-import { TiShoppingCart } from "react-icons/ti";
-import Link from 'next/link'
-import Logo from './Logo'
-
+'use client';
+import React, { useEffect, useRef } from 'react';
+import Container from './Container';
+import HeaderMenu from './HeaderMenu';
+import MobileMenu from './MobileMenu';
+import AuthPage from './AuthPage';
+import { ShoppingCart, LayoutDashboard, ExternalLink } from 'lucide-react';
+import Link from 'next/link';
+import Logo from './Logo';
 
 const Header = () => {
-  const cartCountRef = useRef(null)
+  const cartCountRef = useRef(null);
 
   useEffect(() => {
     const fetchCartCount = async () => {
       try {
-        const data = await fetch(`${process.env.NEXT_PUBLIC_API}/api/v1/product/viewaddtocart`)
-        const cart = await data.json()
+        const data = await fetch(
+          `${process.env.NEXT_PUBLIC_API || "http://localhost:8000"}/api/v1/product/viewaddtocart`
+        );
+        const cart = await data.json();
         if (cartCountRef.current) {
-          cartCountRef.current.textContent = cart?.length || 0
+          cartCountRef.current.textContent = Array.isArray(cart) ? cart.length : 0;
         }
       } catch (error) {
-        console.error('Error fetching cart count:', error)
+        console.error('Error fetching cart count:', error);
       }
-    }
+    };
 
-    // Fetch immediately
-    fetchCartCount()
+    fetchCartCount();
+    window.addEventListener('cart-updated', fetchCartCount);
+    return () => window.removeEventListener('cart-updated', fetchCartCount);
+  }, []);
 
-    // Set up polling every 5 seconds
-    const interval = setInterval(fetchCartCount, 3000)
-
-    return () => clearInterval(interval)
-  }, [])
-        
-        
   return (
-    <header className='bg-black/90 py-5 sticky top-0 z-50 backdrop-blur-lg shadow rounded-b-lg'>
-        <Container className='flex justify-between items-center'>
-            <div className='w-auto md:w-1/3 flex items-center justify-start gap-2.5 text-white md:gap-0'>
-              
-                <MobileMenu/>
-                <Logo/>        
-            </div>
-            <div className='w-auto md:w-1/3'>
-             <HeaderMenu/>
-            </div>
-            <div className='w-auto md:w-1/3 flex items-center justify-end gap-2.5 md:gap-5'>
-            <Link href='/cart' className='relative'>
-            <TiShoppingCart size={30} className='text-white absolute -top-3 right-0' />
-            <span ref={cartCountRef} className='absolute -top-4 -right-1 bg-shop_dark_orange text-white text-xs rounded-full w-5 h-5 flex items-center justify-center'>0</span>
-            </Link>
-            <AuthPage/>
-            </div>
-            
-        </Container>
-    </header>
-  )
-}
+    <header className="bg-white/95 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-50 text-slate-800 shadow-xs transition-all">
+      <Container className="flex justify-between items-center h-20">
+        {/* Left: Mobile Toggle & Brand Logo */}
+        <div className="flex items-center gap-4">
+          <MobileMenu />
+          <Logo />
+        </div>
 
-export default Header
+        {/* Center: Navigation Menu with Larger Readable Text */}
+        <div className="hidden md:flex items-center justify-center">
+          <HeaderMenu />
+        </div>
+
+        {/* Right: Dashboard Link, Cart, Auth */}
+        <div className="flex items-center gap-3.5">
+          <a
+            href="http://localhost:5173"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-50 hover:bg-emerald-50 text-slate-800 hover:text-emerald-700 border border-slate-200/80 transition-all shadow-xs"
+            title="Open Merchant Management Dashboard"
+          >
+            <LayoutDashboard className="w-4 h-4 text-emerald-600" />
+            <span>Dashboard</span>
+            <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
+          </a>
+
+          <Link
+            href="/cart"
+            className="relative p-2.5 rounded-xl text-slate-800 hover:text-emerald-600 hover:bg-slate-50 transition-colors"
+            title="View Shopping Cart"
+          >
+            <ShoppingCart className="w-6 h-6" />
+            <span
+              ref={cartCountRef}
+              className="absolute top-0 right-0 bg-emerald-600 text-white font-extrabold text-[11px] rounded-full w-5 h-5 flex items-center justify-center shadow-xs"
+            >
+              0
+            </span>
+          </Link>
+
+          <AuthPage />
+        </div>
+      </Container>
+    </header>
+  );
+};
+
+export default Header;

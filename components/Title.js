@@ -5,7 +5,7 @@ const Title = ({ title, children, className }) => {
   return (
     <h1
       className={cn(
-        `font-sans font-semibold text-2xl text-shop_dark_gray tracking-wide`,
+        `font-sans font-black text-2xl sm:text-3xl text-slate-900 tracking-tight`,
         className,
       )}
     >

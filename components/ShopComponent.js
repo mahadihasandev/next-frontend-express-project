@@ -62,124 +62,160 @@ const ShopComponent = ({category,product}) => {
   };
 
   return (
-    <div>
-      <div className='flex w-full py-3 shadow-lg rounded-lg  flex-col items-center justify-center'>
-        <h1 className="text-2xl font-bold text-center py-1">Shop</h1>
-        <p className="text-center text-lg text-shop_dark_orange">Pic your Favorite Product</p>
+    <div className="space-y-6">
+      {/* Symmetrical Shop Banner Header */}
+      <div className="bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-8 shadow-xs flex flex-col items-center justify-center text-center space-y-2">
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200/60 shadow-xs">
+          Verified Catalog
+        </span>
+        <h1 className="text-3xl font-black text-slate-900 tracking-tight">
+          Explore Product Marketplace
+        </h1>
+        <p className="text-xs sm:text-sm text-slate-500 font-medium max-w-md">
+          {currentProduct ? `Browsing ${currentProduct.name} collections` : "Select a department or browse all verified inventory."}
+        </p>
       </div>
-      <div className=" py-5 flex flex-col gap-5 items-start md:flex-row">
-        <div className="hidden md:flex flex-col md:min-w-40 border hoverEffect mt-10 rounded-md">
-              {category.map((category) => (
-                <Button
-                  key={category?._id}
-                  
-                  onClick={() =>
-                    handleCategoryChange(category)
-                  }
-                  className={`bg-transparent border-0 py-5 my-1 text-darkColor 
-         hover:bg-shop_dark_orange shadow-md rounded-md hover:text-white hover:scale-110 hover:rounded-md font-semibold 
-        hoverEffect border-b last:border-b-0 capitalize ${category?.slug === currentProduct?.slug && "bg-shop_dark_orange text-white"}`}
-                >
-                  <p className="w-full text-left px-2">{category?.name}</p>
-                </Button>
-              ))}
-            </div>
-         <Accordion
-        type="single"
-        collapsible
-        className="max-w-lg w-full md:hidden"
-      >
-        <AccordionItem value="category">
-          <AccordionTrigger
-            className="text-shop_dark_blue/80 text-lg tracking-wider 
-        font-semibold border border-shop_light_blue/30  
-         shadow hoverEffect shadow-shop_light_blue/30 
-        hover:shadow-shop_light_blue/50 hover:border-shop_light_blue/50 rounded-md px-10 py-3 "
-          >
-            Filter
-          </AccordionTrigger>
-          <AccordionContent>
-            <div className="flex flex-col md:min-w-40 border hoverEffect rounded-md">
-              {category.map((category) => (
-                <Button
-                  key={category?._id}
-                  
-                  onClick={() =>
-                    handleCategoryChange(category)
-                  }
-                  className={`bg-transparent border-0 p-0 text-darkColor 
-         hover:bg-shop_dark_orange shadow-md rounded-md hover:text-white px-6 hover:rounded-md font-semibold 
-        hoverEffect border-b last:border-b-0 capitalize ${category?.slug === currentProduct?.slug && "bg-shop_dark_orange text-white"}`}
-                >
-                  <p className="w-full text-left px-2">{category?.name}</p>
-                </Button>
-              ))}
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
 
-        <div>
-      { !currentProduct ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 md:mt-10">
-          {product?.map((item) => {
-            const cartItem = cartData?.find(
-              (cart) => cart?.cartId?._id === item?._id,
-            );
-            return (
-              <AnimatePresence key={item._id}>
-                <motion.div
-                  layout
-                  initial={{ opacity: 0.2 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 1 }}
+      <div className="flex flex-col lg:flex-row gap-6 items-start">
+        {/* Desktop Sidebar: Clean White Card with Emerald Active Pill */}
+        <aside className="hidden lg:flex flex-col w-64 bg-white border border-slate-200/80 rounded-3xl p-3 shadow-xs shrink-0 space-y-1 sticky top-24">
+          <div className="px-3 py-2 text-xs font-black uppercase tracking-wider text-slate-400 border-b border-slate-100 mb-1 flex items-center justify-between">
+            <span>Filter Categories</span>
+            {currentProduct && (
+              <button
+                onClick={() => setCurrentProduct('')}
+                className="text-[11px] font-bold text-emerald-700 hover:underline cursor-pointer"
+              >
+                Clear
+              </button>
+            )}
+          </div>
+          <button
+            onClick={() => setCurrentProduct('')}
+            className={`w-full text-left px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
+              !currentProduct
+                ? "bg-emerald-600 text-white shadow-xs"
+                : "text-slate-700 hover:bg-slate-50 hover:text-emerald-700"
+            }`}
+          >
+            All Categories
+          </button>
+          <div className="max-h-[calc(100vh-280px)] overflow-y-auto space-y-0.5 pr-1">
+            {category.map((cat) => {
+              const isActive = cat?.slug === currentProduct?.slug;
+              return (
+                <button
+                  key={cat?._id}
+                  onClick={() => handleCategoryChange(cat)}
+                  className={`w-full text-left px-3.5 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer flex items-center justify-between ${
+                    isActive
+                      ? "bg-emerald-600 text-white shadow-xs"
+                      : "text-slate-700 hover:bg-slate-50 hover:text-emerald-700"
+                  }`}
                 >
-                  <div>
-                    <ProductCard
-                      product={item}
-                      cartItem={cartItem}
-                      handleCartUpdate={handleCartUpdate}
-                      addToCartOptimistic={addToCartOptimistic}
-                    />
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            );
-          })}
-        </div>
-      ):
-       (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 mt-10">
-          {currentProduct?.productList?.map((item) => {
-            const cartItem = cartData?.find(
-              (cart) => cart?.cartId?._id === item?._id,
-            );
-            return (
-              <AnimatePresence key={item._id}>
-                <motion.div
-                  layout
-                  initial={{ opacity: 0.2 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 1 }}
+                  <span className="truncate">{cat?.name}</span>
+                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-white shrink-0 ml-2" />}
+                </button>
+              );
+            })}
+          </div>
+        </aside>
+
+        {/* Mobile Accordion */}
+        <Accordion
+          type="single"
+          collapsible
+          className="w-full lg:hidden bg-white rounded-2xl border border-slate-200/80 p-2 shadow-xs"
+        >
+          <AccordionItem value="category" className="border-none">
+            <AccordionTrigger className="text-xs font-bold text-slate-800 px-3 py-2 hover:no-underline">
+              <span>Filter by Department {currentProduct ? `(${currentProduct.name})` : ''}</span>
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className="grid grid-cols-2 gap-1.5 pt-2">
+                <button
+                  onClick={() => setCurrentProduct('')}
+                  className={`px-3 py-2 rounded-xl text-xs font-bold text-left ${
+                    !currentProduct ? "bg-emerald-600 text-white" : "bg-slate-50 text-slate-700"
+                  }`}
                 >
-                  <div>
-                    <ProductCard
-                      product={item}
-                      cartItem={cartItem}
-                      handleCartUpdate={handleCartUpdate}
-                      addToCartOptimistic={addToCartOptimistic}
-                    />
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            );
-          })}
-        </div>)
-      }
-    </div>
+                  All Categories
+                </button>
+                {category.map((cat) => (
+                  <button
+                    key={cat?._id}
+                    onClick={() => handleCategoryChange(cat)}
+                    className={`px-3 py-2 rounded-xl text-xs font-bold text-left truncate ${
+                      cat?.slug === currentProduct?.slug
+                        ? "bg-emerald-600 text-white"
+                        : "bg-slate-50 text-slate-700"
+                    }`}
+                  >
+                    {cat?.name}
+                  </button>
+                ))}
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+
+        {/* Product Cards Grid: Symmetrical 4-Column Layout */}
+        <div className="flex-1 min-w-0">
+          {!currentProduct ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+              {product?.map((item) => {
+                const cartItem = cartData?.find(
+                  (cart) => cart?.cartId?._id === item?._id
+                );
+                return (
+                  <AnimatePresence key={item._id}>
+                    <motion.div
+                      layout
+                      initial={{ opacity: 0.2 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <ProductCard
+                        product={item}
+                        cartItem={cartItem}
+                        handleCartUpdate={handleCartUpdate}
+                        addToCartOptimistic={addToCartOptimistic}
+                      />
+                    </motion.div>
+                  </AnimatePresence>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+              {currentProduct?.productList?.map((item) => {
+                const cartItem = cartData?.find(
+                  (cart) => cart?.cartId?._id === item?._id
+                );
+                return (
+                  <AnimatePresence key={item._id}>
+                    <motion.div
+                      layout
+                      initial={{ opacity: 0.2 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <ProductCard
+                        product={item}
+                        cartItem={cartItem}
+                        handleCartUpdate={handleCartUpdate}
+                        addToCartOptimistic={addToCartOptimistic}
+                      />
+                    </motion.div>
+                  </AnimatePresence>
+                );
+              })}
+            </div>
+          )}
         </div>
+      </div>
     </div>
   )
 }

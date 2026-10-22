@@ -113,97 +113,105 @@ const cartItem = cartData?.find((cart) => cart?.cartId?._id === product?._id )
     />
               )}
             </div>
-            <div className="flex items-center gap-0.5">
+            <div className="flex items-center gap-1">
               {[...Array(5)].map((_, index) => (
                 <HiMiniStar
                   key={index}
-                  size={15}
-                  className={
-                    index < 4 ? "text-shop_dark_orange" : "text-shop_light_text"
-                  }
-                  fill={index < 4 ? "#ef4a23" : "#ababab"}
+                  size={16}
+                  className={index < 4 ? "text-emerald-600 fill-emerald-600" : "text-slate-300 fill-slate-200"}
                 />
               ))}
-              <p className="text-sm text-gray-600 font-poppins tracking-wide font-bold">
-                {`(45 reviews)`}{" "}
-              </p>
+              <span className="text-xs text-slate-500 font-bold ml-1.5">
+                4.8 (45 verified reviews)
+              </span>
             </div>
           </div>
-          <div className="space-y-2 border-t border-b border-gray-200 py-5">
+          <div className="space-y-3 border-t border-b border-slate-200/80 py-5">
             <PriceView
               price={product?.regularprice}
               discount={product?.discount}
-              className="text-lg font-bold"
+              className="text-2xl font-black text-slate-900"
             />
-            <p
-              className={`inline-block px-4 py-1.5 text-sm text-center font-poppins rounded-lg 
-          tracking-wide font-semibold 
-          ${product?.stock == 0 ? "bg-red-100 text-red-600" : "bg-green-100 text-green-600"}`}
-            >
-              {`${(product?.stock) > 0 ? "In Stock" : "Out of Stock"}`}
-            </p>
-          </div>
-          
-          
-              <AddToCartButton
-          product={product}
-          cartItem={cartItem}
-          handleCartUpdate={handleCartUpdate}
-          addToCartOptimistic={addToCartOptimistic}
-          className="rounded-full mt-1"
-        />
-          
-          
-          <div className="flex flex-wrap items-center justify-between gap-2.5 border-b border-b-gray-200 py-5 -mt-2">
-            <div className="flex items-center gap-2 text-sm text-black hover:text-red-600 hoverEffect">
-              <RxBorderSplit className="text-lg" />
-              <p>Compare color</p>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-black hover:text-red-600 hoverEffect">
-              <FaRegQuestionCircle className="text-lg" />
-              <p>Ask a question</p>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-black hover:text-red-600 hoverEffect">
-              <TbTruckDelivery className="text-lg" />
-              <p>Delivery & Return</p>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-black hover:text-red-600 hoverEffect">
-              <FiShare2 className="text-lg" />
-              <p>Share</p>
+            <div>
+              <span
+                className={`inline-flex items-center gap-1.5 px-3 py-1 text-xs font-bold rounded-full ${
+                  (product?.stock || 0) > 0
+                    ? "bg-emerald-50 text-emerald-700 border border-emerald-200/60"
+                    : "bg-slate-100 text-slate-600 border border-slate-200"
+                }`}
+              >
+                <span className={`w-1.5 h-1.5 rounded-full ${(product?.stock || 0) > 0 ? "bg-emerald-500" : "bg-slate-400"}`} />
+                {(product?.stock || 0) > 0 ? "In Stock & Ready to Ship" : "Currently Out of Stock"}
+              </span>
             </div>
           </div>
-          <div className="flex flex-col shadow-md shadow-shop_light_blue/20">
-            <div className="border border-lightColor/25 border-b-0 p-3 flex items-center gap-2.5">
-              <BsTruck size={30} className="text-shop_orange" />
+
+          <AddToCartButton
+            product={product}
+            cartItem={cartItem}
+            handleCartUpdate={handleCartUpdate}
+            addToCartOptimistic={addToCartOptimistic}
+            className="rounded-2xl mt-1 h-12"
+          />
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 border-b border-slate-200/80 py-4 -mt-2">
+            <div className="flex items-center gap-2 text-xs font-bold text-slate-700 hover:text-emerald-700 transition-colors cursor-pointer">
+              <RxBorderSplit className="text-base text-emerald-600" />
+              <span>Compare</span>
+            </div>
+            <div className="flex items-center gap-2 text-xs font-bold text-slate-700 hover:text-emerald-700 transition-colors cursor-pointer">
+              <FaRegQuestionCircle className="text-base text-emerald-600" />
+              <span>Ask Question</span>
+            </div>
+            <div className="flex items-center gap-2 text-xs font-bold text-slate-700 hover:text-emerald-700 transition-colors cursor-pointer">
+              <TbTruckDelivery className="text-base text-emerald-600" />
+              <span>Delivery Info</span>
+            </div>
+            <div className="flex items-center gap-2 text-xs font-bold text-slate-700 hover:text-emerald-700 transition-colors cursor-pointer">
+              <FiShare2 className="text-base text-emerald-600" />
+              <span>Share</span>
+            </div>
+          </div>
+
+          {/* Delivery & Guarantee Cards (Visual Color Science: Slate & Emerald) */}
+          <div className="rounded-2xl border border-slate-200/80 overflow-hidden bg-slate-50/50">
+            <div className="p-4 flex items-center gap-3 border-b border-slate-200/80">
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
+                <BsTruck className="w-5 h-5 text-emerald-600" />
+              </div>
               <div>
-                <p className="text-base font-semibold text-black">
-                  Free Delivery
+                <p className="text-sm font-bold text-slate-900">
+                  Standard & Express Delivery
                 </p>
-                <p className="text-sm text-gray-500 underline underline-offset-2">
-                  Enter your Postal code for Delivey Availability.
+                <p className="text-xs text-slate-500">
+                  Direct dispatch from verified merchant hub with live order tracking.
                 </p>
               </div>
             </div>
-            <div className="border border-lightColor/25 p-3 flex items-center gap-2.5">
-              <CornerDownLeft size={30} className="text-shop_orange" />
+            <div className="p-4 flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
+                <CornerDownLeft className="w-5 h-5 text-emerald-600" />
+              </div>
               <div>
-                <p className="text-base font-semibold text-black">
-                  Return Delivery
+                <p className="text-sm font-bold text-slate-900">
+                  Hassle-Free 30-Day Returns
                 </p>
-                <p className="text-sm text-gray-500 ">
-                  Free 30days Delivery Returns.{" "}
-                  <span className="underline underline-offset-2">Details</span>
+                <p className="text-xs text-slate-500">
+                  100% money-back guarantee on unopened or damaged items.
                 </p>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="border flex flex-col text-center border-gray-200 p-5">
-        <h1 className="text-2xl font-bold font-poppins py-5">Description</h1>
-        <div className="text-normal text-center text-gray-600 font-poppins tracking-wide font-normal"
-      dangerouslySetInnerHTML={{__html: product?.description}}
-    />
+      <div className="mt-8 bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-8 shadow-xs">
+        <h2 className="text-xl font-black text-slate-900 mb-4 pb-2 border-b border-slate-100">
+          Product Specifications & Description
+        </h2>
+        <div
+          className="text-sm text-slate-600 leading-relaxed space-y-3"
+          dangerouslySetInnerHTML={{ __html: product?.description }}
+        />
       </div>
     </Container>
   );

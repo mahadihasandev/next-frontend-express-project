@@ -1,40 +1,67 @@
-import React from 'react'
-import Logo from './Logo'
-import Link from 'next/link'
-import { X } from 'lucide-react'
-import { usePathname } from 'next/navigation'
-import { useOutSideClick } from '@/hooks'
-import { headerData } from '@/constant/data'
+'use client';
+import React from 'react';
+import Logo from './Logo';
+import Link from 'next/link';
+import { X, ArrowRight } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import { useOutSideClick } from '@/hooks';
+import { headerData } from '@/constant/data';
 
+const SideMenu = ({ isOpen, onClose }) => {
+  const pathname = usePathname();
+  const sideBarRef = useOutSideClick(onClose);
 
-const SideMenu = ({isOpen,onClose}) => {
-   const pathname=usePathname()
-  const sideBarRef=useOutSideClick(onClose)
   return (
-    <div 
-    className={`fixed text-white/80 inset-y-0 h-screen left-0 z-50 w-full bg-black/50 backdrop-blur-md shadow-xl ${isOpen?'translate-x-0':'-translate-x-full'} hoverEffect`}>
-      <div 
-      className=' min-w-56 max-w-72 bg-black/95 h-screen p-10 border-r-2 border-shop_dark_orange flex flex-col gap-6'>
-        <div className='flex items-center justify-between gap-5'>
-        <Logo className='text-white' spanDesign="group-hover:text-white"/>
-        <button onClick={onClose} className='text-red-300 hover:text-red-600 hoverEffect'><X size={20} /></button>
-        </div>
-        <div ref={sideBarRef} className='flex flex-col space-y-7 font-semibold tracking-wide'>
-          
-            {
-              headerData?.map((item)=>(
-                <Link key={item?.href} href={item?.href} 
-                className={`hover:text-shop_dark_orange hoverEffect ${pathname==item?.href&&'text-shop_dark_orange'}`}
+    <div
+      className={`fixed inset-y-0 h-screen left-0 z-50 w-full bg-slate-900/60 backdrop-blur-sm shadow-2xl transition-all duration-300 ${
+        isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+      }`}
+    >
+      <div
+        ref={sideBarRef}
+        className={`w-72 bg-white h-screen p-6 border-r border-slate-200/80 flex flex-col justify-between shadow-2xl transition-transform duration-300 ${
+          isOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        <div className="space-y-6">
+          <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+            <Logo />
+            <button
+              onClick={onClose}
+              className="p-2 rounded-xl text-slate-400 hover:text-slate-800 hover:bg-slate-100 transition-colors cursor-pointer"
+            >
+              <X size={20} />
+            </button>
+          </div>
+
+          <nav className="flex flex-col space-y-1">
+            {headerData?.map((item) => {
+              const isActive = pathname === item?.href;
+              return (
+                <Link
+                  key={item?.href}
+                  href={item?.href}
+                  onClick={onClose}
+                  className={`flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-bold transition-all ${
+                    isActive
+                      ? 'bg-emerald-50 text-emerald-800 border border-emerald-200/80'
+                      : 'text-slate-700 hover:bg-slate-50 hover:text-emerald-700'
+                  }`}
                 >
-                  {item?.title}
+                  <span>{item?.title}</span>
+                  {isActive && <span className="w-2 h-2 rounded-full bg-emerald-600" />}
                 </Link>
-              ))
-            }
+              );
+            })}
+          </nav>
         </div>
-       
+
+        <div className="pt-4 border-t border-slate-100 text-xs text-slate-400 text-center">
+          Cartify Consumer Store • Verified
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SideMenu
+export default SideMenu;

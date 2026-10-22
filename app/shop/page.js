@@ -1,19 +1,33 @@
-import Container from '@/components/Container'
-import ShopComponent from '@/components/ShopComponent'
-import React from 'react'
+import Container from '@/components/Container';
+import ShopComponent from '@/components/ShopComponent';
+import React from 'react';
 
-const ShopPage = async() => {  
-  const categoryData= await fetch(`${process.env.NEXT_PUBLIC_API}/api/v1/product/viewcategory`);
-  const category = await categoryData.json()
-  const productData= await fetch(`${process.env.NEXT_PUBLIC_API}/api/v1/product/viewproduct`);
-  const product = await productData.json()
- 
+export const dynamic = 'force-dynamic';
+
+const ShopPage = async () => {
+  let category = [];
+  let product = [];
+  const apiBase = process.env.NEXT_PUBLIC_API || 'http://localhost:8000';
+
+  try {
+    const [catRes, prodRes] = await Promise.all([
+      fetch(`${apiBase}/api/v1/product/viewcategory`, { cache: 'no-store' }),
+      fetch(`${apiBase}/api/v1/product/viewproduct`, { cache: 'no-store' }),
+    ]);
+    if (catRes.ok) category = await catRes.json();
+    if (prodRes.ok) product = await prodRes.json();
+  } catch (error) {
+    console.warn('Failed to fetch shop data on server:', error.message);
+  }
+
   return (
     <Container>
-      
-      <ShopComponent category={category} product={product}/>
+      <ShopComponent
+        category={Array.isArray(category) ? category : []}
+        product={Array.isArray(product) ? product : []}
+      />
     </Container>
-  )
-}
+  );
+};
 
-export default ShopPage
+export default ShopPage;
