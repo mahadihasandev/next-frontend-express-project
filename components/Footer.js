@@ -68,7 +68,7 @@ const Footer = () => {
             </p>
             <div className="pt-2">
               <a
-                href="http://localhost:5173"
+                href={process.env.NEXT_PUBLIC_DASHBOARD_URL || "https://e-commerce-dashboard-multivandor-zm.vercel.app"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 hover:underline"

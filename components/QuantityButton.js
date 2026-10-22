@@ -17,7 +17,7 @@ const QuantityButton = ({
     }
 
     fetch(
-      `${process.env.NEXT_PUBLIC_API || "http://localhost:8000"}/api/v1/product/addtocart?type=${type}`,
+      `${process.env.NEXT_PUBLIC_API || "https://e-commerce-backend-multivandor.vercel.app"}/api/v1/product/addtocart?type=${type}`,
       {
         headers: {
           Accept: "application/json",

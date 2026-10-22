@@ -5,28 +5,40 @@ import React, { useEffect, useState } from "react";
 import { FolderTree, Sparkles } from "lucide-react";
 
 const HomeCategory = ({ initialCategories = [] }) => {
-  const [category, setCategory] = useState(
+  const [categories, setCategories] = useState(
     Array.isArray(initialCategories) && initialCategories.length > 0 ? initialCategories : []
   );
 
   useEffect(() => {
-    if (initialCategories && initialCategories.length > 0) {
-      setCategory(initialCategories);
+    if (Array.isArray(initialCategories) && initialCategories.length > 0) {
       return;
     }
+
+    let isMounted = true;
     const fetchCategory = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API || "http://localhost:8000"}/api/v1/product/viewcategory`
+          `${process.env.NEXT_PUBLIC_API || "https://e-commerce-backend-multivandor.vercel.app"}/api/v1/product/viewcategory`
         );
         const data = await response.json();
-        setCategory(Array.isArray(data) ? data : []);
+        if (isMounted) {
+          setCategories(Array.isArray(data) ? data : []);
+        }
       } catch (err) {
         console.error("Failed to load featured categories:", err);
       }
     };
     fetchCategory();
+
+    return () => {
+      isMounted = false;
+    };
   }, [initialCategories]);
+
+  const category =
+    Array.isArray(initialCategories) && initialCategories.length > 0
+      ? initialCategories
+      : categories;
 
   if (!category || category.length === 0) return null;
 
@@ -54,7 +66,7 @@ const HomeCategory = ({ initialCategories = [] }) => {
           const imgUrl = raw
             ? raw.startsWith("http")
               ? raw
-              : `${process.env.NEXT_PUBLIC_API || "http://localhost:8000"}${raw.startsWith("/") ? "" : "/"}${raw}`
+              : `${process.env.NEXT_PUBLIC_API || "https://e-commerce-backend-multivandor.vercel.app"}${raw.startsWith("/") ? "" : "/"}${raw}`
             : null;
 
           return (

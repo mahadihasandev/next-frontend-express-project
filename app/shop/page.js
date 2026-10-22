@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 const ShopPage = async () => {
   let category = [];
   let product = [];
-  const apiBase = process.env.NEXT_PUBLIC_API || 'http://localhost:8000';
+  const apiBase = process.env.NEXT_PUBLIC_API || 'https://e-commerce-backend-multivandor.vercel.app';
 
   try {
     const [catRes, prodRes] = await Promise.all([

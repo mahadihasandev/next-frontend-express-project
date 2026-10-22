@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 const ProductPage = async ({ params }) => {
   const { slug } = await params;
   let product = null;
-  const apiBase = process.env.NEXT_PUBLIC_API || 'http://localhost:8000';
+  const apiBase = process.env.NEXT_PUBLIC_API || 'https://e-commerce-backend-multivandor.vercel.app';
 
   try {
     const data = await fetch(`${apiBase}/api/v1/product/viewsingleproduct/${slug}`, {

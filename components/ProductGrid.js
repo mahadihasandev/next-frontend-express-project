@@ -22,7 +22,7 @@ const ProductGrid = ({ initialProducts = [] }) => {
       setLoading(true);
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API || "http://localhost:8000"}/api/v1/product/viewproduct`
+          `${process.env.NEXT_PUBLIC_API || "https://e-commerce-backend-multivandor.vercel.app"}/api/v1/product/viewproduct`
         );
         const data = await res.json();
         setProduct(Array.isArray(data) ? data : []);
@@ -39,7 +39,7 @@ const ProductGrid = ({ initialProducts = [] }) => {
     async function getCartData() {
       try {
         const data = await fetch(
-          `${process.env.NEXT_PUBLIC_API || "http://localhost:8000"}/api/v1/product/viewaddtocart`
+          `${process.env.NEXT_PUBLIC_API || "https://e-commerce-backend-multivandor.vercel.app"}/api/v1/product/viewaddtocart`
         );
         const posts = await data.json();
         setCartData(Array.isArray(posts) ? posts : []);

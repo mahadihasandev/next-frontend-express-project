@@ -18,7 +18,7 @@ const AddToCartButton = ({
     if (addToCartOptimistic) addToCartOptimistic(item);
     try {
       await fetch(
-        `${process.env.NEXT_PUBLIC_API || "http://localhost:8000"}/api/v1/product/addtocart`,
+        `${process.env.NEXT_PUBLIC_API || "https://e-commerce-backend-multivandor.vercel.app"}/api/v1/product/addtocart`,
         {
           headers: {
             Accept: "application/json",

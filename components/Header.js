@@ -15,7 +15,7 @@ const Header = () => {
     const fetchCartCount = async () => {
       try {
         const data = await fetch(
-          `${process.env.NEXT_PUBLIC_API || "http://localhost:8000"}/api/v1/product/viewaddtocart`
+          `${process.env.NEXT_PUBLIC_API || "https://e-commerce-backend-multivandor.vercel.app"}/api/v1/product/viewaddtocart`
         );
         const cart = await data.json();
         if (cartCountRef.current) {
@@ -48,7 +48,7 @@ const Header = () => {
         {/* Right: Dashboard Link, Cart, Auth */}
         <div className="flex items-center gap-3.5">
           <a
-            href="http://localhost:5173"
+            href={process.env.NEXT_PUBLIC_DASHBOARD_URL || "https://e-commerce-dashboard-multivandor-zm.vercel.app"}
             target="_blank"
             rel="noopener noreferrer"
             className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-50 hover:bg-emerald-50 text-slate-800 hover:text-emerald-700 border border-slate-200/80 transition-all shadow-xs"

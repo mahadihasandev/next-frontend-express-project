@@ -35,7 +35,7 @@ const Banner = ({ initialBanners = [] }) => {
     async function fetchBanners() {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API || "http://localhost:8000"}/api/v1/product/viewbanner`
+          `${process.env.NEXT_PUBLIC_API || "https://e-commerce-backend-multivandor.vercel.app"}/api/v1/product/viewbanner`
         );
         const data = await res.json();
         const list = Array.isArray(data) ? data : [];
@@ -125,7 +125,7 @@ const Banner = ({ initialBanners = [] }) => {
             const imgUrl = raw
               ? raw.startsWith("http")
                 ? raw
-                : `${process.env.NEXT_PUBLIC_API || "http://localhost:8000"}${raw.startsWith("/") ? "" : "/"}${raw}`
+                : `${process.env.NEXT_PUBLIC_API || "https://e-commerce-backend-multivandor.vercel.app"}${raw.startsWith("/") ? "" : "/"}${raw}`
               : null;
 
             return (

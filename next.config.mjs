@@ -8,11 +8,14 @@ const nextConfig = {
         port: '8000',
         pathname: '/uploads/**', 
       },
-            {
+      {
+        protocol: 'https',
+        hostname: 'e-commerce-backend-multivandor.vercel.app',
+        pathname: '/**',
+      },
+      {
         protocol: 'https',
         hostname: 'res.cloudinary.com',
-       
-        
       },
       {
         protocol: 'https',

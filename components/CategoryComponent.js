@@ -41,7 +41,7 @@ export default function CategoryComponent({ initialCategories = [] }) {
     const fetchCategories = async () => {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API || "http://localhost:8000"}/api/v1/product/viewcategory`
+          `${process.env.NEXT_PUBLIC_API || "https://e-commerce-backend-multivandor.vercel.app"}/api/v1/product/viewcategory`
         );
         const data = await res.json();
         setCategories(Array.isArray(data) ? data : []);

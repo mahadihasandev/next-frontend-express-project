@@ -6,7 +6,7 @@ import HomeProduct from "@/components/HomeProduct";
 import HomeTech from "@/components/HomeTech";
 
 export default async function Home() {
-  const api = process.env.NEXT_PUBLIC_API || "http://localhost:8000";
+  const api = process.env.NEXT_PUBLIC_API || "https://e-commerce-backend-multivandor.vercel.app";
 
   let banners = [];
   let categories = [];
